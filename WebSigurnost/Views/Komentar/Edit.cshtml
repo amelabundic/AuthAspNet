@@ -1,0 +1,55 @@
+﻿@model WebSigurnost.Models.Komentar
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+
+<hr />
+
+@if (Model.Autor == UserManager.GetUserName(User))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="KomentarId" />
+                <div class="form-group">
+                    <label asp-for="Autor" class="control-label"></label>
+                    <input asp-for="Autor" class="form-control" readonly value="@UserManager.GetUserName(User)"/>
+                    <span asp-validation-for="Autor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Naslov" class="control-label"></label>
+                    <input asp-for="Naslov" class="form-control" />
+                    <span asp-validation-for="Naslov" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sadrzaj" class="control-label"></label>
+                    <textarea asp-for="Sadrzaj" class="form-control"></textarea>
+                    <span asp-validation-for="Sadrzaj" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Promijeni" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="row">
+        <span>Ne mozete da mijenjate komentar ciji niste vlasnik</span>
+    </div>   
+}
+<div>
+    <a asp-action="Index" class="btn btn-success">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

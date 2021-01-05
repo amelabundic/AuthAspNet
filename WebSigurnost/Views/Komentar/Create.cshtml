@@ -1,0 +1,44 @@
+﻿@model WebSigurnost.Models.Komentar
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<h4>Komentar</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Autor" class="control-label"></label>
+                <input asp-for="Autor" class="form-control" readonly value="@UserManager.GetUserName(User)"/>
+                <span asp-validation-for="Autor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Naslov" class="control-label"></label>
+                <input asp-for="Naslov" class="form-control" />
+                <span asp-validation-for="Naslov" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sadrzaj" class="control-label"></label>
+                <textarea asp-for="Sadrzaj" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Sadrzaj" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Novi komentar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-success">Vrati se na listu</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
